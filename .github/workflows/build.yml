@@ -1,0 +1,37 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Configure APT
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -qy \
+            wine64-tools \
+            libwine-dev \
+            libwine-dev:i386 \
+            gcc-multilib
+      - name: 64-bit Build
+        run:  make 64
+      - name: 32-bit Build
+        run:  make 32
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WineASIO 64-bit
+          path: |
+            build64/wineasio64.dll
+            build64/wineasio64.dll.so
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WineASIO 32-bit
+          path: |
+            build32/wineasio32.dll
+            build32/wineasio32.dll.so

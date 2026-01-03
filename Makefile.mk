@@ -43,6 +43,7 @@ else
 INCLUDE_PATH         += \
 			-I$(PREFIX)/include/wine \
 			-I$(PREFIX)/include/wine/windows \
+			-I$(PREFIX)/include/wine/wine/windows \
 			-I$(PREFIX)/include/wine-development \
 			-I$(PREFIX)/include/wine-development/wine/windows \
 			-I/opt/wine-stable/include \
